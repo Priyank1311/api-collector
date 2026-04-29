@@ -1,0 +1,6 @@
+.env
+.env.*
+!.env.example
+server/data.sqlite3
+server/__pycache__
+*.log

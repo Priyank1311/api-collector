@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Collection Runner · Admin</title>
+    <style>
+      :root {
+        --bg: #0b1220;
+        --panel: #0f1b33;
+        --muted: #9aa4b2;
+        --text: #e5e7eb;
+        --border: rgba(255, 255, 255, 0.08);
+        --ok: #10b981;
+        --bad: #fb7185;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      }
+      body { margin: 0; background: var(--bg); color: var(--text); }
+      .wrap { max-width: 1100px; margin: 0 auto; padding: 24px; }
+      .top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+      h1 { margin: 0; font-size: 18px; letter-spacing: -0.02em; }
+      .muted { color: var(--muted); font-size: 12px; }
+      .grid { margin-top: 16px; display: grid; grid-template-columns: 1fr; gap: 12px; }
+      @media (min-width: 980px) { .grid { grid-template-columns: 4fr 7fr; } }
+      .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 14px; }
+      .card h2 { margin: 0 0 10px; font-size: 13px; color: #dbeafe; }
+      table { width: 100%; border-collapse: collapse; font-size: 12px; }
+      td, th { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
+      th { color: var(--muted); font-weight: 600; }
+      .pill { display:inline-flex; align-items:center; padding: 1px 8px; border-radius: 999px; font-weight: 700; font-size: 11px; }
+      .pill.ok { background: rgba(16,185,129,.16); color: #a7f3d0; }
+      .pill.bad { background: rgba(251,113,133,.16); color: #fecdd3; }
+      code { font-family: ui-monospace, Consolas, monospace; font-size: 11px; color: #c7d2fe; }
+      .kvs { display: grid; gap: 6px; }
+      .kv { display:flex; justify-content: space-between; gap: 12px; }
+      .kv .k { color: var(--muted); }
+      .kv .v { font-weight: 700; }
+      .pre { white-space: pre-wrap; word-break: break-word; background: rgba(0,0,0,.25); border: 1px solid var(--border); padding: 10px; border-radius: 12px; font-family: ui-monospace, Consolas, monospace; font-size: 11px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="top">
+        <div>
+          <div class="muted">API Collection Runner</div>
+          <h1>FastAPI Admin Dashboard</h1>
+        </div>
+        <div class="muted">Workspace updated: {{ updatedAt or "never" }}</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h2>Saved data (workspace snapshot)</h2>
+          {% if workspace %}
+            <div class="kvs">
+              <div class="kv"><div class="k">Collections</div><div class="v">{{ (workspace.collections | length) }}</div></div>
+              <div class="kv"><div class="k">Active collection</div><div class="v"><code>{{ workspace.activeCollectionId or "—" }}</code></div></div>
+            </div>
+            <div style="margin-top:10px" class="pre">{{ workspace | tojson(indent=2) }}</div>
+          {% else %}
+            <div class="muted">No snapshot saved yet. Start the frontend with backend sync enabled.</div>
+          {% endif %}
+        </div>
+
+        <div class="card">
+          <h2>Proxy logs (last 50)</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Time</th>
+                <th>Method</th>
+                <th>URL</th>
+                <th>Status</th>
+                <th>ms</th>
+                <th>OK</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for l in logs %}
+              <tr>
+                <td><code>{{ l.id }}</code></td>
+                <td class="muted">{{ l.ts }}</td>
+                <td><code>{{ l.method }}</code></td>
+                <td class="muted">{{ l.url }}</td>
+                <td>{{ l.status or "—" }}</td>
+                <td>{{ l.time_ms or "—" }}</td>
+                <td>
+                  {% if l.ok %}
+                    <span class="pill ok">OK</span>
+                  {% else %}
+                    <span class="pill bad">ERR</span>
+                    <div class="muted">{{ l.error_message }}</div>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
