@@ -6,20 +6,71 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+pip-log.txt
+pip-delete-this-directory.txt
 
+# Frontend build and dependencies
 node_modules
 dist
 dist-ssr
+build
 *.local
+
+# Local environment and secrets
 .env
 .env.*
 !.env.example
 !server/.env.example
-*.sqlite3
-__pycache__
-*.py[cod]
+.envrc
+
+# Python cache, virtualenvs, and local data
+__pycache__/
+*.py[codz]
+*$py.class
+*.so
+.Python
 .venv
 venv
+env/
+ENV/
+env.bak/
+venv.bak/
+*.sqlite3
+db.sqlite3
+db.sqlite3-journal
+
+# Python packaging/test artifacts
+*.egg-info/
+.eggs/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg
+MANIFEST
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py.cover
+.hypothesis/
+.pytest_cache/
+cover/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
 
 # Editor directories and files
 .vscode/*
@@ -31,5 +82,7 @@ venv
 *.njsproj
 *.sln
 *.sw?
+tempCodeRunnerFile.py
 
+# Deployment metadata
 .vercel
