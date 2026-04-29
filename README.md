@@ -79,7 +79,8 @@ The backend start command is:
 uvicorn main:app --host 0.0.0.0 --port $PORT
 ```
 
-Render stores SQLite data at `/var/data/data.sqlite3` using the disk configured in `render.yaml`.
+The included `render.yaml` uses Render's free web service plan and does not attach a paid persistent disk.
+Saved backend workspace data and proxy logs use local SQLite and can reset when the free service restarts, sleeps, or redeploys.
 
 ### Frontend on Vercel
 

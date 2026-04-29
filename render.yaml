@@ -2,6 +2,7 @@ services:
   - type: web
     name: api-collection-runner-backend
     runtime: python
+    plan: free
     rootDir: server
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -13,9 +14,3 @@ services:
         sync: false
       - key: CORS_ORIGINS
         sync: false
-      - key: DB_PATH
-        value: /var/data/data.sqlite3
-    disk:
-      name: api-collection-runner-data
-      mountPath: /var/data
-      sizeGB: 1

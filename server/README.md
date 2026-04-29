@@ -29,11 +29,11 @@ Set these variables on your hosting platform:
 ADMIN_USER=your-admin-user
 ADMIN_PASSWORD=your-strong-password
 CORS_ORIGINS=https://your-frontend-domain.vercel.app
-DB_PATH=/var/data/data.sqlite3
 ```
 
 `CORS_ORIGINS` accepts a comma-separated list when you have multiple frontend domains.
-Use a persistent disk/volume for `DB_PATH` if you want saved workspaces and proxy logs to survive redeploys.
+On no-payment free hosting, leave `DB_PATH` unset. Local SQLite data can reset when the service restarts, sleeps, or redeploys.
+Use a persistent disk/volume for `DB_PATH` only if you later move to a paid plan and want saved workspaces and proxy logs to survive redeploys.
 
 ## Admin dashboard
 
